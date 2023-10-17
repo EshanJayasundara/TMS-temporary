@@ -2,7 +2,7 @@
 Training Management System
 
 ### Application.properties
-
+```
 spring.datasource.url=jdbc:mysql://localhost:3306/moodle_db
 spring.datasource.username=root
 spring.datasource.password=
@@ -30,3 +30,4 @@ spring.security.oauth2.client.registration.github.client-id=
 spring.security.oauth2.client.registration.github.client-secret=
 
 logging.level.org.springframework.security=TRACE
+```
