@@ -65,7 +65,7 @@ function DepartmentSave() {
         credentials: 'include',
       });
       if (responseDean.redirected) {
-        document.location = responseDean.url;
+        navigate('/sdc/login');
       }
       if (responseDean.status === 403) {
         navigate('/sdc/unAuthorized');

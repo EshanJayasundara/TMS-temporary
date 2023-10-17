@@ -89,7 +89,7 @@ const AllApplications = () => {
   const fetchApplications = async (selectedCourseId) => {
     const response = await fetch('http://localhost:8080/application/get/' + selectedCourseId, { method: 'GET', redirect: 'follow', credentials: 'include' });
     if (response.redirected) {
-      navigate('/sdc/unAuthorized');
+      navigate('/sdc/login');
     }
     if (response.status === 403) {
       navigate('/sdc/unAuthorized');

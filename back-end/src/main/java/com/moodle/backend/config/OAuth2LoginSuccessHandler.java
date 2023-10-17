@@ -60,9 +60,13 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                             );
                             SecurityContextHolder.getContext().setAuthentication(securityAuth);
                         });
-                if (userService.findByEmail(email).get().getRole().equals(UserRole.ROLE_ADMIN)){
-                    this.setDefaultTargetUrl("http://localhost:5173/sdc/dashboard");
-                } else if (sdcApplicantService.findbyEmail(email).getEmail().equals(email)){
+                try {
+                    if (userService.findByEmail(email).get().getRole().equals(UserRole.ROLE_ADMIN)) {
+                        this.setDefaultTargetUrl("http://localhost:5173/sdc/dashboard");
+                    } else {
+                        this.setDefaultTargetUrl("http://localhost:5173/sdc/continue");
+                    }
+                } catch (Exception ex) {
                     this.setDefaultTargetUrl("http://localhost:5173/sdc/continue");
                 }
                 this.setAlwaysUseDefaultTargetUrl(true);

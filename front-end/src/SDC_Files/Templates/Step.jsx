@@ -53,7 +53,7 @@ export const Step = () => {
               <div className="flex flex-col items-center mr-5">
                 <div className="w-px h-6 opacity-0 sm:h-full" />
                 <div>
-                  <div className="flex items-center group-hover:bg-amber-300 transition-color duration-300 ease-in-out justify-center w-4 h-4 text-xs font-bold border rounded-full">
+                  <div className="flex items-center group-hover:bg-amber-200 transition-color duration-300 ease-in-out justify-center w-4 h-4 text-xs font-bold border rounded-full">
                     {index + 1}
                   </div>
                 </div>
@@ -61,7 +61,7 @@ export const Step = () => {
               </div>
               <div className="flex flex-col pb-2 sm:items-center sm:flex-row sm:pb-0 transition-transform transform hover:scale-105">
                 <div className="sm:mr-2">
-                  <div className="flex items-center justify-center w-8 h-8 my-1 rounded-full bg-gray-800 group-hover:bg-amber-500 transition-color duration-300 ease-in-out sm:w-10 sm:h-10">
+                  <div className="flex items-center justify-center w-8 h-8 my-1 rounded-full bg-gray-800 group-hover:bg-amber-300 transition-color duration-300 ease-in-out sm:w-10 sm:h-10">
                     <svg
                       className="w-6 h-6 text-white sm:w-8 sm:h-8"
                       stroke="currentColor"

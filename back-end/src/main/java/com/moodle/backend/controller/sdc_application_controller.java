@@ -30,7 +30,6 @@ public class sdc_application_controller {
     }
 
     @PutMapping("/put/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public sdc_application put(@RequestBody sdc_application sdcApplication, @PathVariable Long id){
         return sdcApplicationService.put(sdcApplication, id);
     }
@@ -44,7 +43,10 @@ public class sdc_application_controller {
     @GetMapping("/get/{course_id}/{applicant_id}")
     public sdc_application getByCourseIdApplicantId(@PathVariable Long course_id, @PathVariable Long applicant_id){
         sdc_application sdcApplication = sdcApplicationService.getByCourseIdApplicantId(course_id, applicant_id);
-        if(sdcApplication.getSdcApplicant().getEmail().equals(OAuth2LoginSuccessHandler.email)){
+        if(sdcApplication.getSdcApplicant().getEmail().equals(OAuth2LoginSuccessHandler.email) ||
+                OAuth2LoginSuccessHandler.email.substring(0,4).equals("head") ||
+                OAuth2LoginSuccessHandler.email.substring(0,4).equals("dean"))
+        {
             return sdcApplication;
         } else {
             throw new Unauthorized403("unauthorized access");

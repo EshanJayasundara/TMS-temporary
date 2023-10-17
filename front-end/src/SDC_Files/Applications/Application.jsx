@@ -5,12 +5,24 @@ import {FiLogIn} from "react-icons/fi";
 import logo from "./../../Components/Images/UOPlogo.png";
 
 const Application = () => {
+  const [email, setEmail] = useState("");
   const {course_id, applicant_id} = useParams();
   const [application, setApplication] = useState(null);
   const [deanAccept, setDeanAccept] = useState(false);
   const [hodAccept, setHodAccept] = useState(false);
 
   const navigate = new useNavigate();
+
+  const fetchEmail = async () => {
+    const response = await fetch('http://localhost:8080/email/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
+    if (response.ok) {
+      const jsonData = await response.text();
+      console.log(jsonData);
+      setEmail(jsonData);
+    } else {
+      console.error(response.error);
+    }
+  }
 
   const getApplications = async () => {
     try {
@@ -30,6 +42,8 @@ const Application = () => {
       if (response.ok) {
         const jsonData = await response.json();
         setApplication(jsonData);
+        setHodAccept(jsonData.hodAccept);
+        setDeanAccept(jsonData.deanAccept);
         console.log(jsonData);
       } else {
         console.error("Failed to fetch data");
@@ -42,6 +56,10 @@ const Application = () => {
   useEffect(() => {
     getApplications();
   }, [course_id, applicant_id]);
+
+  useEffect(() => {
+    fetchEmail();
+  }, [])
 
   // Title hover
   const [isHovered, setIsHovered] = useState(false);
@@ -118,10 +136,10 @@ const Application = () => {
               onMouseOver={handleMouseOver}
               onMouseOut={handleMouseOut}
             >
-              <img src={logo} width={120} className="mr-5" />
+              <img src={logo} width={100} className="mr-5" />
             </a>
             <div className="pr-12">
-              <p className="text-2xl font-bold">Staff Development Center</p>
+              <p className="text-2xl font-bold">Staff Development Centre</p>
               <div className="bg-transparent text-md text-gray-900 rounded-md py-1">
                 Registrateration form for<br />
                 <b>{(application && application.mdlCourse) ? application.mdlCourse.fullname : ''}</b> Course<br/>
@@ -133,7 +151,7 @@ const Application = () => {
             <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Designation and Name */}
             <div className="flex justify-center items-center">
-            <table className="md:w-3/5 w-4/5 mt-2 text-md font-medium text-gray-900 ml-2">
+            <table className="md:w-5/6 w-4/5 mt-2 text-md font-medium text-gray-900 ml-2">
               <tbody>
                 <tr>
                   <td className="pl-5 border border-opacity-50">
@@ -243,6 +261,7 @@ const Application = () => {
             </table>
             </div>
             {/* Authorizations */}
+            {(email.substring(0,4)==="dean" && !deanAccept) ?
             <div className="flex items-start ml-12">
               <input
                 type="checkbox"
@@ -254,7 +273,7 @@ const Application = () => {
                 Authorization by Faculty Dean
               </label>
             </div>
-
+            : (email.substring(0, 4) === "head" && !hodAccept) ?
             <div className="flex items-start ml-12">
               <input
                 type="checkbox"
@@ -266,7 +285,11 @@ const Application = () => {
                 Authorization by Department Head
               </label>
             </div>
-
+            :
+            null
+            }
+            {(email.substring(0, 4) === "head" || email.substring(0, 4) === "dean") ?
+            <>
             <button
               type="submit"
               className="ml-12 px-5 py-1 bg-amber-900 hover:bg-amber-600 text-white text-lg font-medium rounded-lg"
@@ -275,6 +298,10 @@ const Application = () => {
               Save
             </button>
             <span id="registerMsg"></span>
+            </>
+            :
+            null
+            }
           </form>
         </div>
       </section>

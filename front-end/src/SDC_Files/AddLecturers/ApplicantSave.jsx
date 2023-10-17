@@ -41,7 +41,7 @@ function ApplicantSave() {
     try {
       const responseHod = await fetch('http://localhost:8080/department/get/' + e.target.value, { method: 'GET', redirect: 'follow', credentials: 'include' });
       if (responseHod.redirected) {
-        navigate('/sdc/unAuthorized');
+        navigate('/sdc/login');
       }
       if (responseHod.status === 403) {
         navigate('/sdc/unAuthorized');
@@ -66,7 +66,7 @@ function ApplicantSave() {
     const responseLec = await fetch('http://localhost:8080/applicant/get_by_fac_dep/' + fac + '/' + dep, { method: 'GET', redirect: 'follow', credentials: 'include' });
     try {
       if (responseLec.redirected) {
-        document.location = responseLec.url;
+        navigate('/sdc/login');
       }
       if (responseLec.status === 403) {
         navigate('/sdc/unAuthorized');
@@ -103,7 +103,7 @@ function ApplicantSave() {
     try {
       const responseDean = await fetch('http://localhost:8080/faculty/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
       if (responseDean.redirected) {
-        document.location = responseDean.url;
+        navigate('/sdc/login');
       }
       if (responseDean.status === 403) {
         navigate('/sdc/unAuthorized');
