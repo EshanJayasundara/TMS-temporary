@@ -161,7 +161,6 @@ const Application = () => {
                     <input
                       type="text"
                       className="bg-gray-200 text-gray-900 text-center sm:text-md rounded-lg focus:ring-primary-600 focus:border-primary-600 p-1"
-                      readOnly
                       value={(application && application.sdcApplicant) ? application.sdcApplicant.designation : ''}
                     />
                   </td>
@@ -174,7 +173,6 @@ const Application = () => {
                     <input
                       type="text"
                       className="bg-gray-200 text-gray-900 text-center sm:text-md rounded-lg focus:ring-primary-600 focus:border-primary-600 p-1"
-                      readOnly
                       value={(application && application.sdcApplicant) ? application.sdcApplicant.name : ''}
                     />
                   </td>
@@ -187,7 +185,6 @@ const Application = () => {
                     <input
                       type="email"
                       className="bg-gray-200 text-gray-900 text-center sm:text-md rounded-lg focus:ring-primary-600 focus:border-primary-600 p-1"
-                      readOnly
                       value={(application && application.sdcApplicant) ? application.sdcApplicant.email : ''}
                     />
                   </td>
@@ -200,7 +197,6 @@ const Application = () => {
                     <input
                       type="email"
                       className="bg-gray-200 text-gray-900 text-center sm:text-md rounded-lg focus:ring-primary-600 focus:border-primary-600 p-1"
-                      readOnly
                       value={(application && application.sdcApplicant) ? application.sdcApplicant.telephone : ''}
                     />
                   </td>

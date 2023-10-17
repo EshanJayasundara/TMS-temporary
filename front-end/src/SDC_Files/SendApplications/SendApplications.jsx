@@ -141,7 +141,7 @@ export default function SendApplications() {
         {/* content goes inside this div */}
 
         <div className="container mx-auto p-4">
-          <h1 className="text-2xl text-gray-800 font-bold mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg">
+          <h1 className="text-2xl text-gray-800 font-bold mx-auto mb-3 text-center bg-amber-200 pt-2 pb-3 py-2 rounded-lg">
             Send Applications for a new course
           </h1>
 

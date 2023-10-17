@@ -53,9 +53,9 @@ const SDCDashboard = () => {
   return (
     <>
       <SDCNavbar />
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-3">
         <div>
-          <div className="font-bold text-center text-lg text-gray-900 ml-12 mt-5 bg-amber-200 p-1 rounded-lg mr-12">
+          <div className="font-bold text-center pt-2 pb-3 py-2 text-xl text-gray-900 ml-12 mt-5 bg-amber-200 p-1 rounded-lg mr-12">
             Steps to Follow
           </div>
           <Step />
@@ -70,7 +70,7 @@ const SDCDashboard = () => {
               alt="Logo"
             />
           </div> */}
-          <div className="font-bold text-lg text-gray-900 mt-5 bg-amber-200 p-1 rounded-lg mr-12 mb-3">List of Upcomming Courses</div>
+          <div className="font-bold text-xl text-gray-900 mt-5 bg-amber-200 p-1 pt-2 pb-3 py-2 rounded-lg mr-12 mb-3">List of Upcomming Courses</div>
           {coureses.map((courese) => (
             <div key={courese} className="p-1 m-1 hover:bg-gray-800 hover:text-amber-200 font-medium text-center rounded-lg bg-slate-300 text-gray-800 mr-12">{courese}</div>
           ))};

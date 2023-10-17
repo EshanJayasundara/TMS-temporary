@@ -126,46 +126,81 @@ function ApplicantSave() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
-    try {
-      const response = await fetch('http://localhost:8080/applicant/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
-      setFormData({
-        name: "",
-        email: "",
-        designation: "",
-        telephone: "",
-        faculty: {
-          id: 0
-        },
-        department: {
-          id: 0
+    if(selectedFaculty !== "" && selectedDepartment !== ""){
+      console.log('Form data submitted:', formData);
+      try {
+        const response = await fetch('http://localhost:8080/applicant/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(formData),
+        });
+        setFormData({
+          name: "",
+          email: "",
+          designation: "",
+          telephone: "",
+          faculty: {
+            id: 0
+          },
+          department: {
+            id: 0
+          }
+        });
+        if (response.ok) {
+          setSubmitStatus('success');
+          fetchLecturers(selectedFaculty, selectedDepartment);
+        } else {
+          setSubmitStatus('failure');
         }
-      });
-      if (response.ok) {
-        setSubmitStatus('success');
-        fetchLecturers(selectedFaculty, selectedDepartment);
-      } else {
+      } catch (error) {
+        console.error('Submission failed:', error);
         setSubmitStatus('failure');
       }
-    } catch (error) {
-      console.error('Submission failed:', error);
-      setSubmitStatus('failure');
+    } else {
+      alert("please select a faculty and a department");
     }
   };
 
-  const handleClick = () => {
-    setShow(!show);
-    console.log(show);
+  const handleClick = (n, e, d, t) => {
+    setShow(true);
+    setFormData({
+      name: n,
+      email: e,
+      designation: d,
+      telephone: t,
+      faculty: {
+        id: 0
+      },
+      department: {
+        id: 0
+      }
+    });
+  }
+
+  const handleClear = () => {
+    setFormData({
+      name: "",
+      email: "",
+      designation: "",
+      telephone: "",
+      faculty: {
+        id: 0
+      },
+      department: {
+        id: 0
+      }
+    });
+    setShow(false);
   }
 
   useEffect(() => {
     fetchFacList();
   }, []);
+
+  const handleUpdate = async () => {
+
+  }
 
   return (
     <>
@@ -221,8 +256,8 @@ function ApplicantSave() {
         </div>
         <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
           <div>
-            <h1 className="text-xl font-bold mt-5 marker:mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg">Add New Lecturer</h1>
-              <form onSubmit={handleSubmit}>
+            <h1 className="text-xl font-bold mt-5 marker:mx-auto mb-3 text-center bg-amber-200 pt-2 pb-3 py-2 rounded-lg">Add New Lecturer</h1>
+            <form onSubmit={(!show) ? handleSubmit : handleUpdate}>
                 <div className='w-2/3'>
                   <div className="mb-2">
                     <label htmlFor="name" className="block text-black font-medium p-1">Name:</label>
@@ -272,38 +307,46 @@ function ApplicantSave() {
                     className="w-full px-4 text-gray-800 font-medium py-1 border rounded-md"
                     />
                   </div>
-                  <div>
-                  <button type="submit" onClick={handleSubmit} className="bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-400 ease-in-out hover:bg-blue-800">Submit</button>
-                  {submitStatus === 'success' && (
-                    <span className="bg-green-600 text-white px-4 py-2 rounded-full ml-2">&#10003; Successful</span>
-                  )}
-                  {submitStatus === 'failure' && (
-                    <span className="bg-red-700 text-white px-4 py-2 rounded-full ml-2">&#10005; Error</span>
-                  )}
+                  <div className="mb-4">
+                    <button type="submit" className="bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-400 ease-in-out hover:bg-blue-800">
+                      {show ? 'Update' : 'Submit'}
+                    </button>
+                    <button
+                      type="button"
+                      className="ml-3 bg-red-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-400 ease-in-out hover:bg-red-800"
+                      onClick={handleClear}
+                    >
+                      clear
+                    </button>
+                    {submitStatus === 'success' && (
+                      <span className="bg-green-700 text-white px-4 py-2 rounded-full ml-2">&#10003; Successful</span>
+                    )}
+                    {submitStatus === 'failure' && (
+                      <span className="bg-red-700 text-white px-4 py-2 rounded-full ml-2">&#10005; Error</span>
+                    )}
                   </div>
                 </div>
               </form>
           </div>
           <div className="row m-4">
-            <h2 className='text-xl font-bold mt-1 marker:mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg'>Already in the System</h2>
+            <h2 className='text-xl font-bold mt-1 marker:mx-auto mb-3 text-center bg-amber-200 pt-2 pb-3 py-2 rounded-lg'>Already in the System</h2>
             <div className='grid mt-4 grid-cols-1 sm:grid-cols-2'>
               {lecturerData.map((lecturer) => (
                 <>
-                <div className='p-1 m-1 bg-gray-800 text-blue-300 font-medium text-center rounded-lg transition-transform transform hover:scale-105 hover:bg-slate-300 hover:text-gray-800' key={lecturer.id}>{lecturer.id} {lecturer.name}
-                    <button
-                      className="ml-2 text-white bg-blue-700 hover:bg-blue-900 py-1 px-1 pt-0 pb-0 rounded"
-                      onClick={handleClick}
-                    >
-                      {!show ? "Show" : "Hide"}
-                    </button>
-                  {show ?
-                    <div className="mt-2 ml-6 text-left">
-                        <label className="block text-grey-800"><b>Email</b>  - {lecturer.email}</label>
-                        <label className="block text-grey-800"><b>tele</b> - {lecturer.telephone}</label>
-                        <label className="block text-grey-800"><b>Id</b> - {lecturer.id}</label>
-                    </div>
-                    : null
-                  }
+                <div className='p-1 m-1 bg-gray-800 text-blue-300 font-medium rounded-lg transition-transform transform hover:scale-105 hover:bg-slate-300 hover:text-gray-800' key={lecturer.id}>
+                    <table className='w-full'>
+                      <tr>
+                        <td>({lecturer.id}) {lecturer.name}</td>
+                        <td className='flex justify-end items-end mr-1'>
+                          <button
+                            className="ml-2 text-white bg-blue-700 hover:bg-blue-900 py-1 px-1 pt-0 pb-0 rounded"
+                            onClick={() => handleClick(lecturer.name, lecturer.email, lecturer.designation, lecturer.telephone)}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                 </>
               ))}

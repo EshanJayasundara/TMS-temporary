@@ -1,8 +1,10 @@
 package com.moodle.backend.controller;
 
 import com.moodle.backend.config.OAuth2LoginSuccessHandler;
+import com.moodle.backend.entity.UserRole;
 import com.moodle.backend.entity.sdc_application;
 import com.moodle.backend.exception.Unauthorized403;
+import com.moodle.backend.service.UserService;
 import com.moodle.backend.service.sdc_application_service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -22,6 +24,9 @@ import java.util.List;
 public class sdc_application_controller {
     @Autowired
     sdc_application_service sdcApplicationService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/get")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -45,7 +50,8 @@ public class sdc_application_controller {
         sdc_application sdcApplication = sdcApplicationService.getByCourseIdApplicantId(course_id, applicant_id);
         if(sdcApplication.getSdcApplicant().getEmail().equals(OAuth2LoginSuccessHandler.email) ||
                 OAuth2LoginSuccessHandler.email.substring(0,4).equals("head") ||
-                OAuth2LoginSuccessHandler.email.substring(0,4).equals("dean"))
+                OAuth2LoginSuccessHandler.email.substring(0,4).equals("dean") ||
+                userService.findByEmail(OAuth2LoginSuccessHandler.email).get().getRole().equals(UserRole.ROLE_ADMIN))
         {
             return sdcApplication;
         } else {

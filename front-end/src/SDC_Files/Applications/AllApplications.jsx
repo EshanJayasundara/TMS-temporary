@@ -117,7 +117,7 @@ const AllApplications = () => {
   return (<>
     <SDCNavbar/>
     <div className="my-9 mx-12">
-      <h1 className="text-2xl text-gray-800 font-bold mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg">
+      <h1 className="text-2xl text-gray-800 font-bold mx-auto mb-3 text-center bg-amber-200 pt-2 pb-3 py-2 rounded-lg">
         Applications
       </h1>
       <div className="flex flex-col mt-0 pt-0">
@@ -146,26 +146,29 @@ const AllApplications = () => {
           <div
             key={application.id}
             className="mb-2 p-2 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"
-          >
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox h-5 w-5 text-blue-500"
-                value={application.application}
-              />
-              <span className="mx-5 font-bold text-white">Id - {application.id}</span>|
-              <span className="mx-5 mt-0 text-blue-400">Course - {application.mdlCourse.fullname} (id:{application.mdlCourse.id})</span>|
-              <span className="mx-5 mt-0 text-blue-400">FacultyId - {(application.sdcApplicant.faculty.id != null) ? application.sdcApplicant.faculty.id : "-"}</span>|
-              <span className="mx-5 mt-0 text-blue-400">Applicant - {application.sdcApplicant.name} (id:{application.sdcApplicant.id})</span>|
-              <span className="mx-5 mt-0 text-blue-400">Start - {convertUnixToDateTime(application.mdlCourse.startdate).substring(0,10)}</span>|
-              <span className="mx-5 mt-0 text-blue-400">Start - {convertUnixToDateTime(application.mdlCourse.enddate).substring(0, 10)}</span>
-              <button 
-                className='bg-red-500 px-2 py-1 rounded-lg hover:bg-red-800 transition-colors duration-300 text-white font-bold'
-                onClick={() => deleteApplication(application.id)}
-              >
-                Delete
-              </button>
-            </label>
+            >
+            <table className='w-full'>
+                <tr>
+                  <td>
+                  <span className="mx-5 font-bold text-white">Id - {application.id}</span>|
+                  <span className="mx-5 mt-0 text-blue-400">Applicant - {application.sdcApplicant.name} (id:{application.sdcApplicant.id})</span>
+                  </td>
+                  <td className='flex justify-end items-end mr-1'>
+                    <button
+                      className='bg-green-500 px-2 py-1 rounded-lg hover:bg-green-800 transition-colors duration-300 text-white font-bold'
+                      onClick={() => navigate('/sdc/application/' + application.mdlCourse.id + '/' + application.sdcApplicant.id)}
+                    >
+                      View
+                    </button>
+                    <button 
+                      className='bg-red-500 px-2 py-1 rounded-lg ml-3 hover:bg-red-800 transition-colors duration-300 text-white font-bold'
+                      onClick={() => deleteApplication(application.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+            </table>
           </div>
         ))}
       </div>
