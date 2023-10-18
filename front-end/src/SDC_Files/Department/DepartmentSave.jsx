@@ -119,6 +119,23 @@ function DepartmentSave() {
     formData.faculty.id = e.target.value;
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const responseDean = await fetch('http://localhost:8080/department/delete/' + id, { method: 'DELETE', redirect: 'follow', credentials: 'include' });
+      if (responseDean.redirected) {
+        navigate('/sdc/login');
+      }
+      if (responseDean.ok) {
+        console.log('data deleted');
+        fetchDepList(selectedFaculty);
+      } else {
+        console.error('Failed to delete data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   const handleClick = (n, e, d) => {
     setFormData({
       name: n,
@@ -249,6 +266,12 @@ function DepartmentSave() {
                       onClick={() => handleClick(department.name, department.email, department.hodName)}
                     >
                       Edit
+                    </button>
+                    <button
+                      className="ml-2 text-white bg-red-700 hover:bg-red-900 py-1 px-1 pt-0 pb-0 rounded"
+                      onClick={() => handleDelete(department.id)}
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>

@@ -53,6 +53,7 @@ function FacultySave() {
 
   const handleUpdate = async() => {
     fetchDeanList();
+    
   }
 
   // fetch faculty details
@@ -69,6 +70,15 @@ function FacultySave() {
       } else {
         console.error('Failed to fetch data');
       }
+      if (responseDean.redirected) {
+        navigate('/sdc/login');
+      }
+      if (responseDean.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (responseDean.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
 
     } catch (error) {
       console.error('Error:', error);
@@ -82,6 +92,24 @@ function FacultySave() {
       deanname: d
     });
     setShow(true);
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      const responseDean = await fetch('http://localhost:8080/faculty/delete/' + id, { method: 'DELETE', redirect: 'follow', credentials: 'include' });
+      if (responseDean.redirected) {
+        navigate('/sdc/login');
+      }
+      if (responseDean.ok) {
+        console.log('data deleted');
+        fetchDeanList();
+      } else {
+        console.error('Failed to delete data');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   const handleClear = () => {
@@ -184,6 +212,12 @@ function FacultySave() {
                         onClick={() => handleClick(faculty.name, faculty.email, faculty.deanname)}
                       >
                         Edit
+                      </button>
+                      <button
+                        className="ml-2 text-white bg-red-700 hover:bg-red-900 py-1 px-1 pt-0 pb-0 rounded"
+                        onClick={() => handleDelete(faculty.id)}
+                      >
+                        Delete
                       </button>
                     </td>
                   </tr>

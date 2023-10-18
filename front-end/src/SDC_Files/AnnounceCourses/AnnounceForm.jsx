@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { TbSend } from "react-icons/tb";
 import TileMapper from '../Templates/TileMapper';
+import axios from 'axios';
 
 // main function
 const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selectedDeanData }) => {
@@ -16,25 +17,26 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
   const mailSubject = `Requesting Nominee List for the course: ${selectedCourse}`;
   const mailbody =
     `
-    Dear Sir/Madam,
+  Dear Sir/Madam,<br><br>
   
-    We're gearing up for an upcoming course: ${selectedCourse} and need the nominee list from your department or college. Please share this information by (date)
+  We're gearing up for an upcoming course: ${selectedCourse} and need the nominee list from your department or college. Please share this information by (date)<br><br>
+  
+  Required Details:<br>
+  - Full Name<br>
+  - Department of the nominee<br>
+  - Contact Info: Email and Phone<br>
+  - Designation<br><br>
+  
+  Your prompt response will help us make necessary arrangements for the course.<br><br>
+  
+  Feel free to contact us if you have any questions.<br><br>
+  
+  Thank you for your cooperation.<br><br>
+  
+  Best regards,<br>
+  Staff Development Center
+  `;
 
-    Required Details:
-        Full Name
-        Department of the nominee
-        Contact Info: Email and Phone
-        Designation
-              
-    Your prompt response will help us make necessary arrangements for the course.
-
-    Feel free to contact us if you have any questions.
-
-    Thank you for your cooperation.
-          
-    Best regards,
-    Staff Development Center
-    `;
 
   // functions
   const handleCourseChange = (e) => {
@@ -68,18 +70,22 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
       subject: mailSubject,
     }));
 
-    console.log(postData)
+    console.log(postData);
 
-    fetch("http://localhost:8080/email/send", { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(postData) })
+    axios.post("http://localhost:8080/email/send", postData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // Equivalent to "credentials: 'include'"
+    })
       .then(response => {
-        if (selectedNames.length === 0 || selectedCourse === ""){
-          alert("Please make sure you have selected a course and faculties correctly !")
+        if (selectedNames.length === 0 || selectedCourse === "") {
+          alert("Please make sure you have selected a course and faculties correctly!");
         } else {
           console.log('POST response:', response.data);
-          alert("Mails Sent")
+          alert("Mails Sent");
         }
       })
-
       .catch(error => {
         console.error('POST error:', error);
       });

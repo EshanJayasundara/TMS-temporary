@@ -2,47 +2,41 @@ export const Step = () => {
   const steps = [
     {
       title: "Announce",
-      description:
-        "All recipes are written using certain conventions, which define the characteristics of common ingredients. The rules vary from place to place.",
+      description: "Stay informed about the latest announcements and updates.",
       link: "http://localhost:5173/sdc/announce",
     },
     {
       title: "Add Faculty",
-      description:
-        "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
+      description: "Easily add new faculty members to your institution's database.",
       link: "http://localhost:5173/sdc/faculty/save",
     },
     {
       title: "Add Department",
-      description:
-        "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
+      description: "Create new departments and manage departmental information.",
       link: "http://localhost:5173/sdc/department/save",
     },
     {
       title: "Add Lecturers",
-      description:
-        "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
+      description: "Manage lecturers and teaching staff in your institution.",
       link: "http://localhost:5173/sdc/applicant/save",
     },
     {
       title: "Prepare Applications",
-      description:
-        "The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest. Michael Knight a young loner.",
-      link: "http://localhost:5173/sdc/application/create", 
+      description: "Get ready to process new applications for your institution.",
+      link: "http://localhost:5173/sdc/application/create",
     },
     {
       title: "Send Applications",
-      description:
-        "The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest. Michael Knight a young loner.",
+      description: "Send out invitations and applications to prospective candidates.",
       link: "http://localhost:5173/sdc/invite",
     },
     {
       title: "View Applications",
-      description:
-        "The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest. Michael Knight a young loner.",
+      description: "Access and review all submitted applications in one place.",
       link: "http://localhost:5173/sdc/allApplications",
     },
   ];
+
 
   return (
     <div className="px-4 py-2 mx-auto max-w-screen-md md:px-8 lg:px-4">
@@ -78,7 +72,7 @@ export const Step = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-base font-semibold sm:text-sm">{step.title}</p>
+                  <p className="text-base font-semibold sm:text-md">{step.title}</p>
                   <p className="text-xs text-gray-600">{step.description}</p>
                 </div>
               </div>

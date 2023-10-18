@@ -162,6 +162,23 @@ function ApplicantSave() {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const responseDean = await fetch('http://localhost:8080/applicant/delete/' + id, { method: 'DELETE', redirect: 'follow', credentials: 'include' });
+      if (responseDean.redirected) {
+        navigate('/sdc/login');
+      }
+      if (responseDean.ok) {
+        console.log('data deleted');
+        fetchLecturers(selectedFaculty, selectedDepartment);
+      } else {
+        console.error('Failed to delete data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   const handleClick = (n, e, d, t) => {
     setShow(true);
     setFormData({
@@ -330,19 +347,25 @@ function ApplicantSave() {
           </div>
           <div className="row m-4">
             <h2 className='text-xl font-bold mt-1 marker:mx-auto mb-3 text-center bg-amber-200 pt-2 pb-3 py-2 rounded-lg'>Already in the System</h2>
-            <div className='grid mt-4 grid-cols-1 sm:grid-cols-2'>
+            <div className='grid mt-4 grid-cols-1'>
               {lecturerData.map((lecturer) => (
                 <>
-                <div className='p-1 m-1 bg-gray-800 text-blue-300 font-medium rounded-lg transition-transform transform hover:scale-105 hover:bg-slate-300 hover:text-gray-800' key={lecturer.id}>
+                <div className='p-1 m-0.5 bg-gray-800 text-blue-300 font-medium rounded-lg transition-transform transform hover:scale-105 hover:bg-slate-300 hover:text-gray-800' key={lecturer.id}>
                     <table className='w-full'>
                       <tr>
-                        <td>({lecturer.id}) {lecturer.name}</td>
+                        <td className='pl-2'>({lecturer.id}) {lecturer.name}</td>
                         <td className='flex justify-end items-end mr-1'>
                           <button
                             className="ml-2 text-white bg-blue-700 hover:bg-blue-900 py-1 px-1 pt-0 pb-0 rounded"
                             onClick={() => handleClick(lecturer.name, lecturer.email, lecturer.designation, lecturer.telephone)}
                           >
                             Edit
+                          </button>
+                          <button
+                            className="ml-2 text-white bg-red-700 hover:bg-red-900 py-1 px-1 pt-0 pb-0 rounded"
+                            onClick={() => handleDelete(lecturer.id)}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>

@@ -20,5 +20,10 @@ public class sdc_faculty_service_impl implements sdc_faculty_service {
     public sdc_faculty save(sdc_faculty sdcFaculty) {
         return sdcFacultyRepository.save(sdcFaculty);
     }
+
+    @Override
+    public void delete(Long id) {
+        sdcFacultyRepository.deleteById(id);
+    }
 }
 

@@ -80,7 +80,7 @@ const SDCNavbar = () => {
         <div className="flex items-center gap-6">
           {/* Logout Button */}
           <button
-            className="bg-gray-700 hover:bg-amber-200 text-white text-sm font-bold py-1 px-3 rounded-lg inline-flex items-center transition-colors duration-200 ease-in-out hover:text-gray-800"
+            className="bg-gray-700 hover:bg-amber-200 text-white text-sm font-medium py-1 px-2 rounded-md inline-flex items-center transition-colors duration-200 ease-in-out hover:text-gray-800"
             onClick={() => handleLogout()}
           >
             <CgLogOut fontSize={18} />

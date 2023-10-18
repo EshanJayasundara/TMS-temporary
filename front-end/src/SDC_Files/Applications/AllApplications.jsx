@@ -155,13 +155,13 @@ const AllApplications = () => {
                   </td>
                   <td className='flex justify-end items-end mr-1'>
                     <button
-                      className='bg-green-500 px-2 py-1 rounded-lg hover:bg-green-800 transition-colors duration-300 text-white font-bold'
+                      className='bg-green-600 px-2 py-1 rounded-md hover:bg-green-800 transition-colors duration-300 text-white font-bold'
                       onClick={() => navigate('/sdc/application/' + application.mdlCourse.id + '/' + application.sdcApplicant.id)}
                     >
                       View
                     </button>
                     <button 
-                      className='bg-red-500 px-2 py-1 rounded-lg ml-3 hover:bg-red-800 transition-colors duration-300 text-white font-bold'
+                      className='bg-red-600 px-2 py-1 rounded-md ml-3 hover:bg-red-800 transition-colors duration-300 text-white font-bold'
                       onClick={() => deleteApplication(application.id)}
                     >
                       Delete

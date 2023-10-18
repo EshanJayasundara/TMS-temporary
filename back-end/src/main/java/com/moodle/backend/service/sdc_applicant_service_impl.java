@@ -63,5 +63,10 @@ public class sdc_applicant_service_impl implements sdc_applicant_service {
         return sdcApplicantRepository.findByEmail(email);
     }
 
+    @Override
+    public void delete(Long id) {
+        sdcApplicantRepository.deleteById(id);
+    }
+
 }
 

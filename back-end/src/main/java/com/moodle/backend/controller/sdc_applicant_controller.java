@@ -21,6 +21,11 @@ public class sdc_applicant_controller {
         return sdcApplicantService.get();
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id){
+        sdcApplicantService.delete(id);
+    }
+
     @GetMapping("/get/{course_id}")
     public List<sdc_applicant> getNotCreated(@PathVariable Long course_id){
         return sdcApplicantService.getNotCreated(course_id);

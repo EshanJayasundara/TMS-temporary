@@ -31,4 +31,8 @@ public class sdc_department_controller {
         return sdcDepartmentService.save(sdcDepartment);
     }
 
+    @DeleteMapping("/department/delete/{id}")
+    public void get(@PathVariable Long id) {
+        sdcDepartmentService.delete(id);
+    }
 }

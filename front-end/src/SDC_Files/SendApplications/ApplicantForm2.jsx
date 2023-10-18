@@ -6,17 +6,17 @@ export default function ApplicantForm2({ applicationData, courseName }) {
 
   const generateMailbody = (NameofApplicant, enrollmentlink) => {
     const mailBody =
-      `Dear ${NameofApplicant},
+      `Dear ${NameofApplicant},<br><br>
 
-Congratulations on your successful application to our ${courseName} course! To secure your spot, please click the enrollment link below:
+Congratulations on your successful application to our ${courseName} course! To secure your spot, please click the enrollment link below:<br><br>
 
-${enrollmentlink}
+${enrollmentlink}<br><br>
 
-Complete this process by the deadline to confirm your spot. If you have questions, contact us at.
+Complete this process by the deadline to confirm your spot. If you have questions, contact us at.<br><br>
 
-We look forward to having you on board!
+We look forward to having you on board!<br><br>
 
-Best regards,
+Best regards,<br>
 Staff Development Center`
 
     return mailBody

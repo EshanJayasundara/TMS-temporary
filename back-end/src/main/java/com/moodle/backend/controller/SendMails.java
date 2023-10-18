@@ -4,11 +4,8 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SendMails {
@@ -19,10 +16,14 @@ public class SendMails {
         HtmlEmail email = new HtmlEmail();
         email.setHostName("smtp.gmail.com"); // Set your SMTP server host
         email.setSmtpPort(587); // Set your SMTP server port
-        email.setAuthenticator(new DefaultAuthenticator("jmeshangj@gmail.com", "")); // Set your email and password
+        email.setAuthenticator(new DefaultAuthenticator("<set-your-gmail-address>", "<your email credentials>")); // Set
+                                                                                                                  // your
+                                                                                                                  // email
+                                                                                                                  // and
+                                                                                                                  // password
         email.setSSLOnConnect(true); // Use SSL for secure connection (optional)
 
-        email.setFrom("jmeshangj@gmail.com");
+        email.setFrom("<set-your-gmail-address>");
         email.addTo(toEmail);
         email.setSubject(subject);
         email.setHtmlMsg(body);

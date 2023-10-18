@@ -8,4 +8,6 @@ public interface sdc_faculty_service {
     List<sdc_faculty> get();
 
     sdc_faculty save(sdc_faculty sdcFaculty);
+
+    void delete(Long id);
 }

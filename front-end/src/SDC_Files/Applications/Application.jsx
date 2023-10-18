@@ -13,12 +13,37 @@ const Application = () => {
 
   const navigate = new useNavigate();
 
+  const sendMailsNTimes = async () => {
+    sendMails(application.sdcApplicant.faculty.email);
+    sendMails(application.sdcApplicant.department.email);
+  }
+
+  const sendMails = (email) => {
+    const postData = [{
+      to: email,
+      body: mailbody,
+      subject: mailSubject,
+    }];
+
+    console.log(postData)
+
+    fetch("http://localhost:8080/email/send", { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(postData) })
+      .then(response => {
+          console.log('POST response:', response.data);
+          alert("Mails Sent");
+      })
+      .catch(error => {
+        console.error('POST error:', error);
+      });
+  };
+
   const fetchEmail = async () => {
     const response = await fetch('http://localhost:8080/email/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
     if (response.ok) {
       const jsonData = await response.text();
       console.log(jsonData);
-      setEmail(jsonData);
+      localStorage.setItem('email', jsonData);
+      setEmail(localStorage.getItem('email'));
     } else {
       console.error(response.error);
     }
@@ -37,6 +62,9 @@ const Application = () => {
         navigate('/sdc/unAuthorized');
       }
       else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
+      else if (response.status === 500) {
         navigate('/sdc/pageNotFound');
       }
       if (response.ok) {
@@ -60,6 +88,26 @@ const Application = () => {
   useEffect(() => {
     fetchEmail();
   }, [])
+
+  let mailSubject;
+  let mailbody;
+
+  try {
+    setTimeout(() => {
+      mailSubject = `Requesting the acceptance`;
+      mailbody = `
+Dear Sir/Madam,<br>
+link: ${application.link}<br>
+<br>
+I kindly request your authorization for my application. Your support in this matter is greatly appreciated.
+`;
+
+
+      console.log(application.link);
+    }, 500);
+  } catch (error) {
+    console.error();
+  }
 
   // Title hover
   const [isHovered, setIsHovered] = useState(false);
@@ -123,6 +171,8 @@ const Application = () => {
     // Update the variable when the checkbox is checked or unchecked
     setHodAccept(e.target.checked);
   };
+
+  console.log(email);
 
   return (
     <>
@@ -285,18 +335,24 @@ const Application = () => {
             null
             }
             {(email.substring(0, 4) === "head" || email.substring(0, 4) === "dean") ?
-            <>
-            <button
-              type="submit"
-              className="ml-12 px-5 py-1 bg-amber-900 hover:bg-amber-600 text-white text-lg font-medium rounded-lg"
-              onClick={handleSubmit}
-            >
-              Save
-            </button>
-            <span id="registerMsg"></span>
-            </>
+                <>
+                <button
+                  type="submit"
+                  className="ml-12 px-5 py-1 bg-amber-900 hover:bg-amber-600 text-white text-lg font-medium rounded-lg"
+                  onClick={handleSubmit}
+                >
+                  Save
+                </button>
+                <span id="registerMsg"></span>
+                </>
             :
-            null
+                <button
+                  type="button"
+                  className="ml-12 px-5 py-1 bg-amber-900 hover:bg-amber-600 text-white text-lg font-medium rounded-lg"
+                  onClick={sendMailsNTimes}
+                >
+                  Save
+                </button>
             }
           </form>
         </div>

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import SDCNavbar from "../SDCNavbar";
 import { Step } from "../Templates/Step";
-import Logo from "./../../Components/Images/UOPlogo.png";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -73,7 +72,7 @@ const SDCDashboard = () => {
           <div className="font-bold text-xl text-gray-900 mt-5 bg-amber-200 p-1 pt-2 pb-3 py-2 rounded-lg mr-12 mb-3">List of Upcomming Courses</div>
           {coureses.map((courese) => (
             <div key={courese} className="p-1 m-1 hover:bg-gray-800 hover:text-amber-200 font-medium text-center rounded-lg bg-slate-300 text-gray-800 mr-12">{courese}</div>
-          ))};
+          ))}
         </div>
       </div>
       <div className="pb-20 p-5 select-none">

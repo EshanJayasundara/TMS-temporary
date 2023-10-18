@@ -10,4 +10,6 @@ public interface sdc_department_service {
     List<sdc_department> getByFacId(Long facultyId);
 
     sdc_department save(sdc_department sdcFaculty);
+
+    void delete(Long id);
 }

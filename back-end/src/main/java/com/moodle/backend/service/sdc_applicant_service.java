@@ -17,4 +17,6 @@ public interface sdc_applicant_service {
     List<sdc_applicant> getByFacultyDepartment(Long facultyId, Long departmentId);
 
     sdc_applicant findbyEmail(String email);
+
+    void delete(Long id);
 }

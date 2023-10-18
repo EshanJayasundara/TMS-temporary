@@ -23,5 +23,10 @@ public class sdc_department_service_impl implements sdc_department_service {
     public sdc_department save(sdc_department sdcFaculty) {
         return sdcDepartmentRepository.save(sdcFaculty);
     }
+
+    @Override
+    public void delete(Long id) {
+        sdcDepartmentRepository.deleteById(id);
+    }
 }
 
